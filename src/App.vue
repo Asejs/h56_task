@@ -3,7 +3,7 @@
     <!-- Dynamically calculate stepper line style -->
     <div class="stepper__line" :style="stepperLineStyle"></div>
 
-    <HelloWorld2
+    <StepperItem
       v-for="(title, index) in stepTitles"
       :key="index"
       :title="title"
@@ -15,38 +15,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from 'vue'
-import HelloWorld2 from './components/HelloWorld2.vue'
+import { ref, nextTick, watch, onMounted } from "vue";
+import StepperItem from "./components/StepperItem.vue";
 
-const stepTitles = ['DRAFT', 'APPROVED', 'ACTIVE', 'COMPLETED']
-const activeIndex = ref(0)
-const stepperLineStyle = ref({})
+const stepTitles = ["DRAFT", "APPROVED", "ACTIVE", "COMPLETED"];
+const activeIndex = ref(0);
+const stepperLineStyle = ref({});
 
 // ** Function to update the stepper line dynamically **
 const updateStepperLine = () => {
   nextTick(() => {
     requestAnimationFrame(() => {
-      const circleElements = Array.from(document.querySelectorAll('.step__circle')) as HTMLElement[]
+      const circleElements = Array.from(
+        document.querySelectorAll(".step__circle")
+      ) as HTMLElement[];
 
-      if (circleElements.length === 0) return
+      if (circleElements.length === 0) return;
 
-      const firstCircle = circleElements[0]
-      const lastCircle = circleElements[circleElements.length - 1]
+      const firstCircle = circleElements[0];
+      const lastCircle = circleElements[circleElements.length - 1];
 
-      if (!firstCircle || !lastCircle) return
+      if (!firstCircle || !lastCircle) return;
 
-      const lineHeight = lastCircle.offsetTop - firstCircle.offsetTop
-      stepperLineStyle.value = { height: `${lineHeight}px` }
-    })
-  })
-}
+      const lineHeight = lastCircle.offsetTop - firstCircle.offsetTop;
+      stepperLineStyle.value = { height: `${lineHeight}px` };
+    });
+  });
+};
 
 // ** Watch the activeIndex to trigger the line update **
-watch(activeIndex, updateStepperLine)
+watch(activeIndex, updateStepperLine);
 
 onMounted(() => {
-  nextTick(updateStepperLine)
-})
+  nextTick(updateStepperLine);
+});
 </script>
 
 <style scoped>
