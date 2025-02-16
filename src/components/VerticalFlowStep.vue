@@ -18,7 +18,7 @@
           {{ title }}
         </div>
 
-        <StepperDetails :index="index" :isActive="isActive" />
+        <VerticalFlowStepDetails :index="index" :isActive="isActive" />
       </div>
     </div>
   </div>
@@ -26,15 +26,13 @@
 
 <script setup lang="ts">
 import { computed, defineProps, defineEmits } from "vue";
-import StepperDetails from "./StepperDetails.vue";
+import VerticalFlowStepDetails from "./VerticalFlowStepDetails.vue";
 
-interface StepperProps {
+const props = defineProps<{
   title: string;
   index: number;
   modelValue: number;
-}
-
-const props = defineProps<StepperProps>();
+}>();
 
 const emit = defineEmits<{
   (event: "update:modelValue", value: number): void;
