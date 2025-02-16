@@ -7,16 +7,17 @@
     @leave="leave"
     @after-leave="afterLeave"
   >
-    <div v-if="isActive" ref="content" class="step-details">
-      <div class="flex">
-        <img
-          src="@/assets/pre-execution-icon.svg"
-          alt="icon"
-          class="step__icon"
-        />
-        <div class="step__label">Pre execution</div>
+    <div v-if="isActive" ref="content" class="verticalFlowStepDetails">
+      <div class="verticalFlowStepDetails__container">
+        <img src="@/assets/pre-execution-icon.svg" alt="icon" />
+
+        <div class="verticalFlowStepDetails__title">Pre execution</div>
       </div>
-      <div class="step__details" :style="{ height: computedHeight }"></div>
+
+      <div
+        class="verticalFlowStepDetails__details"
+        :style="{ height: computedHeight }"
+      ></div>
     </div>
   </transition>
 </template>
@@ -25,11 +26,11 @@
 import { defineProps, computed } from "vue";
 import { useTransitionHooks } from "../hooks/useTransitionHooks"; // Import the hook
 
-interface StepDetailsProps {
+const props = defineProps<{
   index: number;
   isActive: boolean;
-}
-const props = defineProps<StepDetailsProps>();
+}>();
+
 const { beforeEnter, enter, afterEnter, beforeLeave, leave, afterLeave } =
   useTransitionHooks();
 
@@ -40,26 +41,26 @@ const computedHeight = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.step-details {
+.verticalFlowStepDetails {
   overflow: hidden;
-}
 
-.step__details {
-  width: 240px;
-  background-color: #222123;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-}
+  &__container {
+    display: flex;
+    gap: 4px;
+  }
 
-.flex {
-  display: flex;
-  gap: 4px;
-}
+  &__title {
+    color: rgba(255, 255, 255, 0.5);
+  }
 
-.step__label {
-  color: rgba(255, 255, 255, 0.5);
+  &__details {
+    width: 240px;
+    background-color: #222123;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  }
 }
 </style>

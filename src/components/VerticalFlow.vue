@@ -30,7 +30,7 @@ const stepperLineStyle = ref<{ height?: string; top?: string }>({});
 const updateStepperLine = () => {
   requestAnimationFrame(() => {
     const circles = Array.from(
-      document.querySelectorAll(".step__circle")
+      document.querySelectorAll(".verticalFlowStep__circle")
     ) as HTMLElement[];
 
     if (circles.length < 2) return;

@@ -1,18 +1,21 @@
 <template>
-  <div class="step" :class="{ 'step--active': isActive }">
-    <div class="step__container">
-      <div class="step__indicator">
+  <div
+    class="verticalFlowStep"
+    :class="{ 'verticalFlowStep--active': isActive }"
+  >
+    <div class="verticalFlowStep__container">
+      <div class="verticalFlowStep__indicator">
         <div
-          class="step__circle"
-          :class="{ 'step__circle--active': isActive }"
+          class="verticalFlowStep__circle"
+          :class="{ 'verticalFlowStep__circle--active': isActive }"
           @click="activateStep"
         ></div>
       </div>
 
-      <div class="step__content">
+      <div class="verticalFlowStep__content">
         <div
-          class="step__title"
-          :class="{ 'step__title--active': isActive }"
+          class="verticalFlowStep__title"
+          :class="{ 'verticalFlowStep__title--active': isActive }"
           @click="activateStep"
         >
           {{ title }}
@@ -48,8 +51,8 @@ const activateStep = () => {
 </script>
 
 <style lang="scss" scoped>
-.step {
-  padding: 16px 0;
+.verticalFlowStep {
+  padding: 20px 0;
 
   &__container {
     display: flex;
