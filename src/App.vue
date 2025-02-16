@@ -3,9 +3,9 @@
     <div class="stepper__line" :style="stepperLineStyle"></div>
 
     <StepperItem
-      v-for="(title, index) in stepTitles"
+      v-for="(step, index) in steps"
       :key="index"
-      :title="title"
+      :title="step.title"
       :index="index"
       v-model="activeIndex"
       @stepChanged="updateStepperLine"
@@ -14,43 +14,43 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import StepperItem from "./components/StepperItem.vue";
 
-const stepTitles = ["DRAFT", "APPROVED", "ACTIVE", "COMPLETED"];
+const steps = ref([
+  { title: "DRAFT" },
+  { title: "APPROVED" },
+  { title: "ACTIVE" },
+  { title: "COMPLETED" },
+]);
 
 const activeIndex = ref(0);
-const stepperLineStyle = ref({});
+const stepperLineStyle = ref<{ height?: string; top?: string }>({});
 
 const updateStepperLine = () => {
-  nextTick(() => {
-    requestAnimationFrame(() => {
-      const circleElements = Array.from(
-        document.querySelectorAll(".step__circle")
-      ) as HTMLElement[];
+  requestAnimationFrame(() => {
+    const circles = Array.from(
+      document.querySelectorAll(".step__circle")
+    ) as HTMLElement[];
 
-      if (circleElements.length === 0) return;
+    if (circles.length < 2) return;
 
-      const firstCircle = circleElements[0];
-      const lastCircle = circleElements[circleElements.length - 1];
+    const firstCircle = circles[0];
+    const lastCircle = circles[circles.length - 1];
 
-      if (!firstCircle || !lastCircle) return;
+    if (!firstCircle || !lastCircle) return;
 
-      const lineHeight = lastCircle.offsetTop - firstCircle.offsetTop;
-
-      stepperLineStyle.value = {
-        marginTop: `${firstCircle.offsetTop}px`,
-        height: `${lineHeight}px`,
-      };
-    });
+    stepperLineStyle.value = {
+      height: `${lastCircle.offsetTop - firstCircle.offsetTop}px`,
+      top: `${firstCircle.offsetTop + firstCircle.offsetHeight / 2}px`,
+    };
   });
 };
 
+// watchEffect(updateStepperLine);
 watch(stepperLineStyle, updateStepperLine);
 
-onMounted(() => {
-  nextTick(updateStepperLine);
-});
+onMounted(updateStepperLine);
 </script>
 
 <style scoped>
@@ -62,7 +62,6 @@ onMounted(() => {
 
 .stepper__line {
   position: absolute;
-  top: 22px;
   width: 2px;
   background-color: #454445;
   left: 10px;

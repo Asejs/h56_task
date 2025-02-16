@@ -18,30 +18,23 @@
           {{ title }}
         </div>
 
-        <div class="container" v-if="isActive">
-          <div class="flex">
-            <img
-              src="@/assets/pre-execution-icon.svg"
-              alt="icon"
-              class="step__icon"
-            />
-            <div class="step__label">Pre execution</div>
-          </div>
-          <div class="step__details" :style="{ height: dynamicHeight }"></div>
-        </div>
+        <StepperDetails :index="index" :isActive="isActive" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineProps, defineEmits } from "vue";
+import StepperDetails from "./StepperDetails.vue";
 
-const props = defineProps<{
+interface StepperProps {
   title: string;
   index: number;
   modelValue: number;
-}>();
+}
+
+const props = defineProps<StepperProps>();
 
 const emit = defineEmits<{
   (event: "update:modelValue", value: number): void;
@@ -51,31 +44,16 @@ const emit = defineEmits<{
 const isActive = computed(() => props.index === props.modelValue);
 
 const activateStep = () => {
-  emit("stepChanged"); // Notify parent to update stepper line
-  emit("update:modelValue", props.index); // Update the active step
+  emit("update:modelValue", props.index);
+  emit("stepChanged");
 };
-
-// ** Dynamic height calculation for content expansion **
-const dynamicHeight = computed(() => {
-  switch (props.title) {
-    case "DRAFT":
-      return "160px";
-    case "APPROVED":
-      return "80px";
-    case "ACTIVE":
-      return "40px";
-    case "COMPLETED":
-      return "20px";
-    default:
-      return "0px";
-  }
-});
 </script>
 
 <style lang="scss" scoped>
 .step {
   padding: 16px 0;
-  margin-top: &__container {
+
+  &__container {
     display: flex;
   }
 
@@ -108,10 +86,6 @@ const dynamicHeight = computed(() => {
     gap: 10px;
   }
 
-  &__label {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
   &__title {
     cursor: pointer;
     font-size: 14px;
@@ -122,20 +96,5 @@ const dynamicHeight = computed(() => {
       color: #ffffff;
     }
   }
-
-  &__details {
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    margin-top: 8px;
-    width: 240px;
-    background-color: #222123;
-  }
-}
-
-.flex {
-  display: flex;
-  gap: 4px;
 }
 </style>
