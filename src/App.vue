@@ -1,6 +1,5 @@
 <template>
   <div class="stepper">
-    <!-- Dynamically calculate stepper line style -->
     <div class="stepper__line" :style="stepperLineStyle"></div>
 
     <StepperItem
@@ -19,10 +18,10 @@ import { ref, nextTick, watch, onMounted } from "vue";
 import StepperItem from "./components/StepperItem.vue";
 
 const stepTitles = ["DRAFT", "APPROVED", "ACTIVE", "COMPLETED"];
+
 const activeIndex = ref(0);
 const stepperLineStyle = ref({});
 
-// ** Function to update the stepper line dynamically **
 const updateStepperLine = () => {
   nextTick(() => {
     requestAnimationFrame(() => {
@@ -38,13 +37,16 @@ const updateStepperLine = () => {
       if (!firstCircle || !lastCircle) return;
 
       const lineHeight = lastCircle.offsetTop - firstCircle.offsetTop;
-      stepperLineStyle.value = { height: `${lineHeight}px` };
+
+      stepperLineStyle.value = {
+        marginTop: `${firstCircle.offsetTop}px`,
+        height: `${lineHeight}px`,
+      };
     });
   });
 };
 
-// ** Watch the activeIndex to trigger the line update **
-watch(activeIndex, updateStepperLine);
+watch(stepperLineStyle, updateStepperLine);
 
 onMounted(() => {
   nextTick(updateStepperLine);
@@ -65,6 +67,5 @@ onMounted(() => {
   background-color: #454445;
   left: 10px;
   z-index: -1;
-  transition: height 0.3s ease-in-out;
 }
 </style>
