@@ -62,7 +62,7 @@ const activateStep = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 16px;
+    margin-right: 17px;
   }
 
   &__circle {

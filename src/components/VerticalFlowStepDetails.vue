@@ -58,7 +58,7 @@ const computedHeight = computed(() => {
     background-color: #222123;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    margin-top: 8px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
   }
