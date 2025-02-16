@@ -71,7 +71,6 @@ const activateStep = () => {
     height: 22px;
     background-color: #454445;
     border-radius: 50%;
-    /* transition: background-color 0.3s; */
 
     &--active {
       border: 7px solid #49a171;
