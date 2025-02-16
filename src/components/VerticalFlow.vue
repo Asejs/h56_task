@@ -1,6 +1,6 @@
 <template>
-  <div class="verticalFlow">
-    <div class="verticalFlow__line" :style="stepperLineStyle"></div>
+  <div class="vertical-flow">
+    <div class="vertical-flow__line" :style="verticalLineStyle"></div>
 
     <VerticalFlowStep
       v-for="(step, index) in steps"
@@ -8,7 +8,7 @@
       :title="step.title"
       :index="index"
       v-model="activeIndex"
-      @stepChanged="updateStepperLine"
+      @stepChanged="updateVerticalLine"
     />
   </div>
 </template>
@@ -25,14 +25,13 @@ const steps = ref([
 ]);
 
 const activeIndex = ref(0);
-const stepperLineStyle = ref<{ height?: string; top?: string }>({});
+const verticalLineStyle = ref<{ height?: string; top?: string }>({});
 
-const updateStepperLine = () => {
+const updateVerticalLine = () => {
   requestAnimationFrame(() => {
-    const circles = Array.from(
-      document.querySelectorAll(".verticalFlowStep__circle")
-    ) as HTMLElement[];
-
+    const circles = [
+      ...document.querySelectorAll<HTMLElement>(".verticalFlowStep__circle"),
+    ];
     if (circles.length < 2) return;
 
     const firstCircle = circles[0];
@@ -40,30 +39,29 @@ const updateStepperLine = () => {
 
     if (!firstCircle || !lastCircle) return;
 
-    stepperLineStyle.value = {
+    verticalLineStyle.value = {
       height: `${lastCircle.offsetTop - firstCircle.offsetTop}px`,
       top: `${firstCircle.offsetTop + firstCircle.offsetHeight / 2}px`,
     };
   });
 };
 
-watch(stepperLineStyle, updateStepperLine);
-
-onMounted(updateStepperLine);
+watch(verticalLineStyle, updateVerticalLine);
+onMounted(updateVerticalLine);
 </script>
 
-<style scoped>
-.verticalFlow {
+<style lang="scss" scoped>
+.vertical-flow {
   position: relative;
   display: flex;
   flex-direction: column;
-}
 
-.verticalFlow__line {
-  position: absolute;
-  width: 2px;
-  background-color: #454445;
-  left: 10px;
-  z-index: -1;
+  &__line {
+    position: absolute;
+    width: 2px;
+    background-color: #454445;
+    left: 10px;
+    z-index: -1;
+  }
 }
 </style>

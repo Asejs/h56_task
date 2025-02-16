@@ -87,9 +87,11 @@ const activateStep = () => {
   }
 
   &__title {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     font-size: 14px;
-    height: 18px;
+    height: 22px;
     color: rgba(255, 255, 255, 0.5);
 
     &--active {
