@@ -20,7 +20,6 @@
         >
           {{ title }}
         </div>
-
         <VerticalFlowStepDetails :index="index" :isActive="isActive" />
       </div>
     </div>
