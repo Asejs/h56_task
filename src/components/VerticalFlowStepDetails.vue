@@ -7,15 +7,15 @@
     @leave="leave"
     @after-leave="afterLeave"
   >
-    <div v-if="isActive" ref="content" class="verticalFlowStepDetails">
-      <div class="verticalFlowStepDetails__container">
+    <div v-if="isActive" ref="content" class="vertical-flow-step-details">
+      <div class="vertical-flow-step-details__container">
         <img src="@/assets/pre-execution-icon.svg" alt="icon" />
 
-        <div class="verticalFlowStepDetails__title">Pre execution</div>
+        <div class="vertical-flow-step-details__title">Pre execution</div>
       </div>
 
       <div
-        class="verticalFlowStepDetails__details"
+        class="vertical-flow-step-details__details"
         :style="{ height: computedHeight }"
       ></div>
     </div>
@@ -41,7 +41,7 @@ const computedHeight = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.verticalFlowStepDetails {
+.vertical-flow-step-details {
   overflow: hidden;
 
   &__container {

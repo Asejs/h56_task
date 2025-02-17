@@ -25,12 +25,15 @@ const steps = ref([
 ]);
 
 const activeIndex = ref(0);
-const verticalLineStyle = ref<{ height?: string; top?: string }>({});
+const verticalLineStyle = ref<{ height?: string; top?: string }>({
+  height: "0px",
+  top: "0px",
+});
 
 const updateVerticalLine = () => {
   requestAnimationFrame(() => {
     const circles = [
-      ...document.querySelectorAll<HTMLElement>(".verticalFlowStep__circle"),
+      ...document.querySelectorAll<HTMLElement>(".vertical-flow-step__circle"),
     ];
     if (circles.length < 2) return;
 
