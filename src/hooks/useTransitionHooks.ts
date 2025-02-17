@@ -1,4 +1,3 @@
-// composables/useTransitionHooks.ts
 import { ref } from "vue";
 
 export function useTransitionHooks() {
@@ -34,7 +33,7 @@ export function useTransitionHooks() {
 
   const leave = (el: Element, done: () => void) => {
     const element = el as HTMLElement;
-    void element.offsetHeight; // Force reflow
+    void element.offsetHeight;
     element.style.height = "0";
     element.style.opacity = "0";
     element.addEventListener("transitionend", done, { once: true });
